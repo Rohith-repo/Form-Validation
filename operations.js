@@ -22,7 +22,21 @@ async function loadData() {
   }
 }
 
+// Initial load
 loadData();
+
+// Listen for storage changes (when form is submitted)
+window.addEventListener('storage', function(e) {
+  if (e.key === 'formData') {
+    loadData();
+    console.log('Data updated from another tab/window');
+  }
+});
+
+window.addEventListener('formDataUpdated', function() {
+  loadData();
+  console.log('Data updated - reloaded');
+});
 
 const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
@@ -51,7 +65,10 @@ function interpretToMB(n) {
 searchInput.addEventListener("keyup", () => {
   const input = searchInput.value.trim();
   resultsDiv.innerHTML = "";
-  if (!input) return;
+  if (!input) {
+    resultsDiv.classList.remove('show');
+    return;
+  }
   
   let filtered = [];
   
@@ -76,50 +93,33 @@ searchInput.addEventListener("keyup", () => {
 function displayResults(data) {
   if (!data.length) {
     resultsDiv.innerHTML = "<div class='result-item'>No results found</div>";
+    resultsDiv.classList.add('show');
     return;
   }
   
+  resultsDiv.innerHTML = '';
   data.forEach(user => {
     const div = document.createElement("div");
     div.className = "result-item";
     div.innerHTML = `
-      <strong>${user.firstName} ${user.lastName || ""}</strong>
+      <strong>${user.firstName} ${user.lastName || ""}</strong><br>
+      <span>Email: ${user.email}</span><br>
     `;
     resultsDiv.appendChild(div);
   });
+  resultsDiv.classList.add('show');
 }
 
 (() => {
   'use strict'
-
   const forms = document.querySelectorAll('.needs-validation')
-
   Array.from(forms).forEach(form => {
     form.addEventListener('submit', event => {
-
-      event.preventDefault()   
-      event.stopPropagation()
-
       if (!form.checkValidity()) {
-        form.classList.add('was-validated')
-        return; 
+        event.preventDefault()
+        event.stopPropagation()
       }
-
-      let formData = JSON.parse(localStorage.getItem('formData')) || []
-
-      const data = {
-        firstName: form.querySelector('[name="firstName"]').value,
-        email: form.querySelector('[name="email"]').value
-      }
-
-      formData.push(data)
-      localStorage.setItem('formData', JSON.stringify(formData))
-
       form.classList.add('was-validated')
-      setTimeout(() => {
-        location.reload()
-      }, 100) 
-
     }, false)
   })
 })()

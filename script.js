@@ -1,3 +1,4 @@
+// Load data from localStorage
 let formData = JSON.parse(localStorage.getItem('formData')) || [];
 
 const fields = {
@@ -12,7 +13,7 @@ const fields = {
     profileImage: { required: true }
 };
 
-
+// Email validation
 function validateEmail(email) {
     const parts = email.split('@');
     if (parts.length !== 2) return false;
@@ -32,6 +33,7 @@ function validateEmail(email) {
     return true;
 }
 
+// Password validation
 function validatePassword(password) {
     const requirements = {
         length: password.length >= 8 && password.length <= 15,
@@ -50,11 +52,13 @@ function validatePassword(password) {
     return Object.values(requirements).every(r => r);
 }
 
+// PAN validation
 function validatePAN(pan) {
     const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
     return panRegex.test(pan);
 }
 
+// DOB validation
 function validateDOB(dob) {
     const date = new Date(dob);
     const min = new Date('1947-08-15');
@@ -62,18 +66,18 @@ function validateDOB(dob) {
     return date >= min && date <= max;
 }
 
+// Field validation handler
 function validateField(field, value) {
     const errorEl = document.getElementById(field.id + 'Error');
-    const isRequired = fields[field.id].required;
-
-    if (!isRequired && !value) {
+    
+    if (!fields[field.id].required && !value) {
         field.classList.remove('invalid', 'valid');
         if (errorEl) errorEl.classList.remove('show');
         return true;
     }
 
-    let isValid = true; 
-
+    let isValid = false;
+    
     if (field.id === 'firstName') {
         isValid = value.trim().length > 0;
     } else if (field.id === 'email') {
@@ -91,42 +95,22 @@ function validateField(field, value) {
     }
 
     field.classList.toggle('valid', isValid);
-    field.classList.toggle('invalid', !isValid && isRequired);
-
+    field.classList.toggle('invalid', !isValid && fields[field.id].required);
+    
     if (errorEl) {
-        errorEl.classList.toggle('show', !isValid && isRequired);
+        errorEl.classList.toggle('show', !isValid && fields[field.id].required);
     }
 
     return isValid;
 }
 
-
+// Save data to localStorage
 function saveToLocalStorage() {
     localStorage.setItem('formData', JSON.stringify(formData));
 }
 
-function exportToJSON() {
-    if (formData.length === 0) {
-        alert('No data to export!');
-        return;
-    }
-    
-}
 
-async function loadExistingData() {
-    try {
-        const response = await fetch('data.json');
-        if (response.ok) {
-            const data = await response.json();
-            formData = data;
-            saveToLocalStorage();
-            console.log('Loaded data from data.json:', formData);
-        }
-    } catch (error) {
-        console.log('No existing data.json found, starting fresh.');
-    }
-}
-
+// Add event listeners to all inputs
 document.getElementById('firstName').addEventListener('blur', function() {
     validateField(this, this.value);
 });
@@ -209,7 +193,7 @@ document.getElementById('validationForm').addEventListener('submit', function(e)
         
         alert('Form submitted successfully!.');
         console.log('Current Data:', JSON.stringify(formData, null, 2));
-        
+        window.location.reload();
         this.reset();
         
         document.querySelectorAll('input, select').forEach(el => {
@@ -246,6 +230,8 @@ document.getElementById('searchInput').addEventListener('input', function() {
         resultsDiv.innerHTML = filtered.map(entry => `
             <div class="result-item">
                 <strong>${entry.firstName} ${entry.lastName}</strong><br>
+                Email: ${entry.email}<br>
+                DOB: ${entry.dob} | Image: ${entry.imageSizeMB} MB
             </div>
         `).join('');
         resultsDiv.classList.add('show');
