@@ -1,0 +1,236 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding: 0 20px;
+}
+
+.header h1 {
+    color: #1976d2;
+    font-size: 28px;
+}
+
+.search-container {
+    position: relative;
+}
+
+#searchInput {
+    padding: 10px 15px;
+    border: 2px solid #90caf9;
+    border-radius: 25px;
+    width: 300px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s;
+}
+
+#searchInput:focus {
+    border-color: #1976d2;
+    box-shadow: 0 0 10px rgba(25, 118, 210, 0.2);
+}
+
+#results {
+    position: absolute;
+    top: 45px;
+    width: 300px;
+    right: 0;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    max-width: 400px;
+    max-height: 300px;
+    overflow-y: auto;
+    display: none;
+    z-index: 1000;
+}
+
+#results.show {
+    display: block;
+}
+
+/* .result-item {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e0e0e0;
+    cursor: pointer;
+    transition: background 0.2s;
+} */
+
+/* .result-item:hover {
+    background: #f5f5f5;
+}
+
+.result-item:last-child {
+    border-bottom: none;
+} */
+
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #424242;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.required::after {
+    content: " *";
+    color: #f44336;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s;
+    outline: none;
+}
+
+input:focus, select:focus {
+    border-color: #90caf9;
+}
+
+input.valid, select.valid {
+    border-color: #66bb6a !important;
+}
+
+input.invalid, select.invalid {
+    border-color: #ef5350 !important;
+}
+
+.error-message {
+    color: #f44336;
+    font-size: 12px;
+    margin-top: 5px;
+    display: none;
+}
+
+.error-message.show {
+    display: block;
+}
+
+.password-requirements {
+    margin-top: 10px;
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 5px;
+}
+
+.requirement {
+    font-size: 12px;
+    color: #757575;
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+}
+
+.requirement::before {
+    content: "✗";
+    color: #ef5350;
+    font-weight: bold;
+    margin-right: 8px;
+    display: inline-block;
+    width: 16px;
+}
+
+.requirement.met::before {
+    content: "✓";
+    color: #66bb6a;
+}
+
+.file-input-wrapper {
+    position: relative;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.file-label {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #90caf9;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 14px;
+}
+
+.file-label:hover {
+    background: #64b5f6;
+}
+
+.file-info {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #757575;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #1976d2 0%, #7b1fa2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 20px;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(25, 118, 210, 0.4);
+}
+
+.submit-btn:disabled {
+    background: #bdbdbd;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.loading {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #1976d2;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 8px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Form Validation</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search by Name, DOB, Image Size..."/>
+            <div id="results"></div>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <form action="#" id="validationForm">
+            <div class="form-group">
+                <label class="required">First Name</label>
+                <input type="text" id="firstName" placeholder="Enter first name">
+                <div class="error-message" id="firstNameError">First name is required</div>
+            </div>
+
+            <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" id="lastName" placeholder="Enter last name (optional)">
+            </div>
+
+            <div class="form-group">
+                <label class="required">Email</label>
+                <input type="text" id="email" placeholder="example@domain.com">
+                <div class="error-message" id="emailError">Enter valid email</div>
+            </div>
+
+            <div class="form-group">
+                <label class="required">Password</label>
+                <input type="password" id="password" placeholder="Enter password">
+                <div class="error-message" id="passwordError">Password is required</div>
+                <div class="password-requirements">
+                    <div class="requirement" id="reqLength">8-15 characters</div>
+                    <div class="requirement" id="reqUpper">At least 1 uppercase letter</div>
+                    <div class="requirement" id="reqLower">At least 1 lowercase letter</div>
+                    <div class="requirement" id="reqNumber">At least 1 number</div>
+                    <div class="requirement" id="reqSpecial">At least 1 special character</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="required">Educational Qualification</label>
+                <select id="education">
+                    <option value="">Select qualification</option>
+                    <option value="B.Tech">B.Tech</option>
+                    <option value="B.Com">B.Com</option>
+                    <option value="MCA">MCA</option>
+                    <option value="MBA">MBA</option>
+                    <option value="B.Sc">B.Sc</option>
+                    <option value="M.Sc">M.Sc</option>
+                    <option value="B.A">B.A</option>
+                    <option value="M.A">M.A</option>
+                </select>
+                <div class="error-message" id="educationError">Please select qualification</div>
+            </div>
+
+            <div class="form-group">
+                <label>Occupation</label>
+                <input type="text" id="occupation" placeholder="Enter occupation (optional)">
+            </div>
+
+            <div class="form-group">
+                <label class="required">PAN Number</label>
+                <input type="text" id="pan" placeholder="ABCDE1234F" maxlength="10">
+                <div class="error-message" id="panError">Enter PAN Number</div>
+            </div>
+
+            <div class="form-group">
+                <label class="required">Date of Birth</label>
+                <input type="date" id="dob" min="1947-08-15" max="2010-08-15">
+                <div class="error-message" id="dobError"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="required">Profile Image</label>
+                <div class="file-input-wrapper">
+                    <input type="file" id="profileImage" accept=".png,.jpg,.jpeg,.tiff">
+                    <label for="profileImage" class="file-label">Choose File</label>
+                    <div class="file-info" id="fileInfo">No file chosen (Max 2MB)</div>
+                </div>
+                <div class="error-message" id="imageError">Please upload a valid image (PNG, JPG, JPEG, TIFF, max 2MB)</div>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Form</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="operations.js"></script>
+</body>
+</html>
